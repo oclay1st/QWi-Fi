@@ -144,7 +144,7 @@ ApplicationWindow {
             MenuItem {
                 text: qsTr("Exit")
                 onTriggered: {
-                    if(starting || running){
+                    if(running){
                         qwifiapp.stopWiFiAP()
                         delayStoppingTimer.start()
                     }else{
