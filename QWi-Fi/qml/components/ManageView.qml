@@ -16,92 +16,94 @@ Item {
 
     Label {
         id: label2
-        x: 39
-        y: 17
-        text: qsTr("Compartir desde:")
+        x: 30
+        y: 19
+        width: 125
+        height: 17
+        text: qsTr("Interface to share:")
     }
     ComboBoxStyled {
         id: inIface
-        x: 39
+        x: 30
         y: 40
-        width: 260
+        width: 280
         height: 30
     }
     Label {
         id: label3
-        x: 39
-        y: 76
-        text: qsTr("Compartir a:")
+        x: 30
+        y: 79
+        text: qsTr("Share with:")
     }
 
     ComboBoxStyled {
         id: outIface
-        x: 40
+        x: 30
         y: 99
-        width: 260
+        width: 280
         height: 30
     }
 
     Label {
         id: label
-        x: 40
-        y: 153
+        x: 30
+        y: 150
         text: qsTr("SSID:")
     }
 
     TextFieldStyled {
         id: ssid
-        x: 40
-        y: 176
-        width: 260
+        x: 30
+        y: 171
+        width: 280
         height: 30
         selectByMouse:true
         leftPadding: 30
-        placeholderText: qsTr("Nombre Ap")
+        placeholderText: qsTr("Access point name")
     }
 
     Label {
         id: label1
-        x: 42
-        y: 213
-        text: qsTr("Contraseña:")
+        x: 30
+        y: 210
+        text: qsTr("Password:")
     }
 
     TextFieldStyled {
         id: password
-        x: 40
-        y: 236
-        width: 260
+        x: 30
+        y: 231
+        width: 280
         height: 30
         rightPadding:40
         leftPadding: 30
         selectByMouse:true
         echoMode: "Password"
-        placeholderText: qsTr("Contraseña")
+        placeholderText: qsTr("Password")
     }
     Image {
         id: showPasswordImage
-        x: 273
-        y: 243
+        x: 285
+        y: 239
         width: 16
-        height: 17
-        source:"qrc:/resources/visibility.svg"
+        height: 16
+        source:"qrc:/resources/images/visibility.svg"
     }
 
     MouseArea {
         id: mouseAreaPassword
-        x: 265
-        y: 236
+        x: 273
+        y: 232
         width: 33
         height: 29
         hoverEnabled: true
         onClicked: {
             if(password.echoMode==2){
                 password.echoMode = "Normal"
-                showPasswordImage.source = "qrc:/resources/hint.svg"
+                showPasswordImage.source = "qrc:/resources/images/hint.svg"
             }else{
                 password.echoMode = "Password"
-                showPasswordImage.source = "qrc:/resources/visibility.svg"
+                showPasswordImage.source = "qrc:/resources/images/visibility.svg"
             }
         }
     }
@@ -109,11 +111,11 @@ Item {
     Button {
         id: startButton
         x: 101
-        y: 302
+        y: 307
         width: 138
         height: 40
         font.pixelSize: 14
-        text: qsTr("Inciar")
+        text: qsTr("Start")
         enabled: inIface.currentText != "" && outIface.currentText != "" && ssid.text != "" && password.length >= 8
 //                contentItem: Text {
 //                    text: startButton.text
@@ -133,20 +135,20 @@ Item {
 
     Image {
         id: image
-        x: 47
-        y: 243
+        x: 38
+        y: 237
         width: 16
         height: 16
-        source: "qrc:/resources/password.svg"
+        source: "qrc:/resources/images/password.svg"
     }
 
     Image {
         id: image1
-        x: 47
-        y: 183
+        x: 38
+        y: 177
         width: 16
         height: 16
-        source: "qrc:/resources/wifi.svg"
+        source: "qrc:/resources/images/wifi.svg"
     }
 
 }

@@ -1,10 +1,11 @@
 <RCC>
     <qresource prefix="/">
-        <file>resources/hint.svg</file>
-        <file>resources/password.svg</file>
-        <file>resources/visibility.svg</file>
-        <file>resources/wifi.svg</file>
-        <file>resources/go-down.svg</file>
-        <file>resources/Roboto-Thin.ttf</file>
+        <file>resources/images/hint.svg</file>
+        <file>resources/images/password.svg</file>
+        <file>resources/images/visibility.svg</file>
+        <file>resources/images/wifi.svg</file>
+        <file>resources/images/go-down.svg</file>
+        <file>resources/fonts/Roboto-Thin.ttf</file>
+        <file>resources/translations/qwifi_es.qm</file>
     </qresource>
 </RCC>

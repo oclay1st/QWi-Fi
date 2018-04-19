@@ -13,58 +13,22 @@ Item {
         y: 63
         width: 264
         height: 38
-        text: qsTr("Punto de acceso oculto")
+        text: qsTr("Access point hidden")
         checked: false
     }
 
     CheckBoxStyled {
         id: isonlate
         x: 24
-        y: 105
-        text: qsTr("Desabilitar comunicación entre clientes")
+        y: 29
+        text: qsTr("Disable communication between clients")
         checked: false
-    }
-
-    Row {
-        id: row
-        x: 31
-        y: 23
-        width: 282
-        height: 48
-
-        Label {
-            id: label1
-            width: 122
-            height: 18
-            text: qsTr("Banda de frecuencia:")
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        RadioButtonStyled {
-            id: frec2
-            width: 87
-            height: 40
-            text: qsTr("2.4 GHz")
-            anchors.verticalCenterOffset: -1
-            anchors.verticalCenter: parent.verticalCenter
-            checked: true
-        }
-
-        RadioButtonStyled {
-            id: frec5
-            width: 76
-            height: 40
-            text: qsTr("5 GHz")
-            anchors.verticalCenterOffset: -1
-            anchors.verticalCenter: parent.verticalCenter
-            checked: false
-        }
     }
 
     Row {
         id: row1
         x: 31
-        y: 135
+        y: 101
         width: 296
         height: 49
 
@@ -72,7 +36,7 @@ Item {
             id: label
             width: 110
             height: 17
-            text: qsTr("Número de canal:")
+            text: qsTr("Difusion channel:")
             verticalAlignment: Text.AlignTop
             anchors.verticalCenterOffset: 1
             anchors.verticalCenter: parent.verticalCenter
@@ -93,16 +57,16 @@ Item {
     Row {
         id: row2
         x: 31
-        y: 191
+        y: 158
         width: 243
         height: 35
         spacing: 8
 
         Label {
             id: label2
-            width: 99
+            width: 60
             height: 17
-            text: qsTr("Puerta de enlace:")
+            text: qsTr("Gateway:")
             anchors.verticalCenterOffset: 1
             anchors.verticalCenter: ipAdress3.verticalCenter
         }

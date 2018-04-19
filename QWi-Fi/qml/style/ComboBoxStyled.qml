@@ -13,7 +13,7 @@ ComboBox {
             height:width;
             x: control.width - width - control.rightPadding + 3;
             y: control.topPadding + (control.availableHeight - height) / 2;
-            source:"qrc:/resources/go-down.svg";
+            source:"qrc:/resources/images/go-down.svg";
      }
 
     delegate: ItemDelegate {
