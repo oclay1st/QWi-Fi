@@ -57,7 +57,7 @@ ApplicationWindow {
 
     FontLoader {
         id: qwififont
-        source: "qrc:/resources/Roboto-Thin.ttf"
+        source: "qrc:/resources/fonts/Roboto-Thin.ttf"
     }
 
     Timer {
@@ -111,13 +111,13 @@ ApplicationWindow {
         id: systemTray
         visible: true
         tooltip: qsTr("QWi-Fi, The linux hotspot")
-        iconSource: "qrc:/resources/wifi.svg"
+        iconSource: "qrc:/resources/images/wifi.svg"
 
         menu: Menu {
 
             MenuItem {
                 text: qsTr("Stop Wi-Fi")
-                enabled: starting || running
+                enabled: running
                 onTriggered: qwifiapp.stopWiFiAP()
             }
 
@@ -168,12 +168,14 @@ ApplicationWindow {
         }
     }
 
+
     onClosing: {
         close.accepted = false
         if(starting || running){
             qwifiWindow.hide()
-            systemTray.showMessage(qsTr("QWi-Fi"),qsTr("La aplicación continuara ejecutándose."+
-                                                       " Si desea terminar presione Salir en el menu contextual."))
+            systemTray.showMessage(qsTr("QWi-Fi"),qsTr("The program will keep running in the "+
+                                                       "system tray. To terminate the program, "+
+                                                       "choose Quit in the context menu "))
         }else{
             Qt.quit()
         }

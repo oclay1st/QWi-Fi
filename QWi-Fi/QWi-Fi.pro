@@ -43,5 +43,8 @@ HEADERS += \
     translation.h \
     networkutility.h
 
+lupdate_only {
+    SOURCES = *.qml
+}
 
-TRANSLATIONS += translations/qwifi_es.ts
+TRANSLATIONS += resources/translations/qwifi_es.ts

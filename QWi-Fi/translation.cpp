@@ -15,10 +15,11 @@ QString Translation::qmli18n(){
 }
 
 void Translation::selectLanguage(QString language){
-    QDir dir = QDir(qApp->applicationDirPath()).absolutePath();
     if(!translator->load(
-                QString("qwifi_%1").arg(language),
-                QString("%1/translations").arg(dir.path())
+                QLocale(language),
+                QString("qwifi"),
+                QString("_"),
+                QString(":/resources/translations")
                 )
             )
     {
