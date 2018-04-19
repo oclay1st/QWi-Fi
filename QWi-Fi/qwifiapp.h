@@ -18,15 +18,15 @@ public:
 
 
 public slots:
-    void start(QString wifiIface, QString inthernetIface, QString ssid, QString password);
-    void stop();
-    void proccessReadyOutput(QString output);
-    void proccessReadyErrorOutput(QString output);
+    void startWiFiAP(QString wifiIface, QString inthernetIface, QString ssid, QString password);
+    void stopWiFiAP();
+    void wifiReadyOutput(QString output);
+    void wifiReadyErrorOutput(QString output);
 
 
 signals:
-    void started();
-    void stopped();
+    void wifiAPStarted();
+    void wifiAPStopped();
     void newMessage(const QString &msg);
 
 private:

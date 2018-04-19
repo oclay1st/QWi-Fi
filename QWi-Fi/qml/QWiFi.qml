@@ -34,12 +34,12 @@ ApplicationWindow {
 
     QWiFiApp {
         id: qwifiapp
-        onStarted: {
+        onWifiAPStarted: {
             running = true
             starting  = false
             console.log('started')
         }
-        onStopped: {
+        onWifiAPStopped: {
             running = false
             currentViewIndex = 0
             restoreWindow()
@@ -95,7 +95,7 @@ ApplicationWindow {
         ManageView {
             startButton.onClicked: {
                 starting = true
-                qwifiapp.start(inIface.currentText, outIface.currentText, ssid.text, password.text)
+                qwifiapp.startWiFiAP(inIface.currentText, outIface.currentText, ssid.text, password.text)
                 delayStartingTimer.start()
             }
             inIface.model: networkUtlity.getAllInterfaces()
@@ -118,7 +118,7 @@ ApplicationWindow {
             MenuItem {
                 text: qsTr("Stop Wi-Fi")
                 enabled: starting || running
-                onTriggered: qwifiapp.stop()
+                onTriggered: qwifiapp.stopWiFiAP()
             }
 
             MenuItem {
@@ -145,7 +145,7 @@ ApplicationWindow {
                 text: qsTr("Exit")
                 onTriggered: {
                     if(starting || running){
-                        qwifiapp.stop()
+                        qwifiapp.stopWiFiAP()
                         delayStoppingTimer.start()
                     }else{
                         Qt.quit()
