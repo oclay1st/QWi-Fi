@@ -1,0 +1,15 @@
+﻿*.pro.user*
+Makefile
+*.Debug
+*-Debug
+*.Release
+*-Release
+*.Profile
+*-Profile
+
+debug
+
+release
+
+*.bat
+
