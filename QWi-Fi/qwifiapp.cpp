@@ -65,13 +65,6 @@ void QWiFiApp::stop(){
     process->start("pkexec", arguments);
 }
 
-QStringList QWiFiApp::getAllInterfaces(){
-    return QWiFi::Utils::getAllInterfaces();
-}
-QStringList QWiFiApp::getWirelessInterfaces(){
-    return QWiFi::Utils::getWirelessInterfaces();
-}
-
 void QWiFiApp::denyAcces(QString mac,QString ip){
 
 }

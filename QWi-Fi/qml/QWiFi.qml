@@ -51,6 +51,10 @@ ApplicationWindow {
         }
     }
 
+    NetworkUtility {
+        id: networkUtlity
+    }
+
     FontLoader {
         id: qwififont
         source: "qrc:/resources/Roboto-Thin.ttf"
@@ -94,8 +98,8 @@ ApplicationWindow {
                 qwifiapp.start(inIface.currentText, outIface.currentText, ssid.text, password.text)
                 delayStartingTimer.start()
             }
-            inIface.model: qwifiapp.getAllInterfaces()
-            outIface.model: qwifiapp.getWirelessInterfaces()
+            inIface.model: networkUtlity.getAllInterfaces()
+            outIface.model: networkUtlity.getWirelessInterfaces()
         }
 
         WifiDetailsView {}

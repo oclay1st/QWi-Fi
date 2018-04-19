@@ -22,8 +22,7 @@ public slots:
     void stop();
     void proccessReadyOutput(QString output);
     void proccessReadyErrorOutput(QString output);
-    QStringList getAllInterfaces();
-    QStringList getWirelessInterfaces();
+
 
 signals:
     void started();

@@ -7,7 +7,8 @@ SOURCES += main.cpp \
     qwifi_global.cpp \
     worker.cpp \
     singleapplication.cpp \
-    translation.cpp
+    translation.cpp \
+    networkutility.cpp
 
 RESOURCES += qml.qrc \
     res.qrc
@@ -39,7 +40,8 @@ HEADERS += \
     qwifi_global.h \
     worker.h \
     singleapplication.h \
-    translation.h
+    translation.h \
+    networkutility.h
 
 
 TRANSLATIONS += translations/qwifi_es.ts

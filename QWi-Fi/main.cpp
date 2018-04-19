@@ -6,6 +6,7 @@
 #include "qwifi_global.h"
 #include "singleapplication.h"
 #include "translation.h"
+#include "networkutility.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,6 +22,8 @@ int main(int argc, char *argv[])
     QWiFi::Utils::initBD();
 
     qmlRegisterType<QWiFiApp>("QWiFi", 1, 0, "QWiFiApp");
+    qmlRegisterType<NetworkUtility>("QWiFi", 1, 0, "NetworkUtility");
+
     QQmlApplicationEngine engine;
 
     Translation trans;

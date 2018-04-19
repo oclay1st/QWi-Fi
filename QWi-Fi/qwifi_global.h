@@ -23,9 +23,6 @@ public:
     static QString convert (quint64 bytes);
     static QSqlQuery* consultBD(const QString &connection, const QString &querySQL);
     static QString macDescription (const QString &mac);
-    static QStringList getWirelessInterfaces();
-    static QStringList getAllInterfaces();
-    static bool isWireless(const char* ifname, char* protocol);
 };
 
 QWIFI_NAMESPACE_END
