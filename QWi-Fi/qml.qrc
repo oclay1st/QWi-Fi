@@ -7,9 +7,11 @@
         <file>qml/components/WifiDetailsView.qml</file>
         <file>qml/components/PreferenceView.qml</file>
         <file>qml/style/ComboBoxStyled.qml</file>
-        <file>qml/style/TextFieldStyled.qml</file>       
+        <file>qml/style/TextFieldStyled.qml</file>
         <file>qml/style/CheckBoxStyled.qml</file>
         <file>qml/style/RadioButtonStyled.qml</file>
         <file>qml/qtquickcontrols2.conf</file>
+        <file>qml/components/qmldir</file>
+        <file>qml/style/qmldir</file>
     </qresource>
 </RCC>

@@ -16,7 +16,7 @@ Item {
 
     Label {
         id: label2
-        x: 30
+        x: 38
         y: 19
         width: 125
         height: 17
@@ -24,38 +24,38 @@ Item {
     }
     ComboBoxStyled {
         id: inIface
-        x: 30
-        y: 40
-        width: 280
+        x: 37
+        y: 42
+        width: 267
         height: 30
     }
     Label {
         id: label3
-        x: 30
-        y: 79
+        x: 37
+        y: 78
         text: qsTr("Share with:")
     }
 
     ComboBoxStyled {
         id: outIface
-        x: 30
-        y: 99
-        width: 280
+        x: 37
+        y: 101
+        width: 267
         height: 30
     }
 
     Label {
         id: label
-        x: 30
+        x: 37
         y: 150
         text: qsTr("SSID:")
     }
 
     TextFieldStyled {
         id: ssid
-        x: 30
-        y: 171
-        width: 280
+        x: 37
+        y: 173
+        width: 267
         height: 30
         selectByMouse:true
         leftPadding: 30
@@ -64,16 +64,16 @@ Item {
 
     Label {
         id: label1
-        x: 30
-        y: 210
+        x: 37
+        y: 212
         text: qsTr("Password:")
     }
 
     TextFieldStyled {
         id: password
-        x: 30
-        y: 231
-        width: 280
+        x: 37
+        y: 233
+        width: 267
         height: 30
         rightPadding:40
         leftPadding: 30
@@ -83,8 +83,8 @@ Item {
     }
     Image {
         id: showPasswordImage
-        x: 285
-        y: 239
+        x: 279
+        y: 241
         width: 16
         height: 16
         source:"qrc:/resources/images/visibility.svg"
@@ -92,10 +92,10 @@ Item {
 
     MouseArea {
         id: mouseAreaPassword
-        x: 273
-        y: 232
+        x: 270
+        y: 234
         width: 33
-        height: 29
+        height: 28
         hoverEnabled: true
         onClicked: {
             if(password.echoMode==2){
@@ -114,8 +114,9 @@ Item {
         y: 307
         width: 138
         height: 40
-        font.pixelSize: 14
+        font.pixelSize: 13
         text: qsTr("Start")
+        topPadding: 5
         enabled: inIface.currentText != "" && outIface.currentText != "" && ssid.text != "" && password.length >= 8
 //                contentItem: Text {
 //                    text: startButton.text
@@ -135,8 +136,8 @@ Item {
 
     Image {
         id: image
-        x: 38
-        y: 237
+        x: 43
+        y: 239
         width: 16
         height: 16
         source: "qrc:/resources/images/password.svg"
@@ -144,8 +145,8 @@ Item {
 
     Image {
         id: image1
-        x: 38
-        y: 177
+        x: 43
+        y: 179
         width: 16
         height: 16
         source: "qrc:/resources/images/wifi.svg"

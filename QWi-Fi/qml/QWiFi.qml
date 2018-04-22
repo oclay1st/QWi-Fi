@@ -42,7 +42,6 @@ ApplicationWindow {
         onWifiAPStopped: {
             running = false
             currentViewIndex = 0
-            restoreWindow()
             console.log('stopped')
         }
         onNewMessage:{
