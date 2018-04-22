@@ -31,7 +31,9 @@ signals:
 
 private:
     QString _activeInterface;
-
+    QRegExp _apEnabled;
+    QRegExp _clientIn;
+    QRegExp _clientOut;
 
 };
 

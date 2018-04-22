@@ -2,14 +2,15 @@
 #include <QDebug>
 #include <QStringList>
 #include <QRegExp>
-#include <QNetworkInterface>
 
-#include "qwifi_global.h"
 #include "qwifiapp.h"
 #include "worker.h"
 
 QWiFiApp::QWiFiApp(QObject *parent) : QObject(parent)
 {
+     _apEnabled.setPattern("\\bAP-ENABLED\\b");
+     _clientIn.setPattern("\\bAP-STA-CONNECTED\\b");
+     _clientOut.setPattern("\\bAP-STA-DISCONNECTED\\b");
 }
 
 void QWiFiApp::startWiFiAP(QString inthernetIface, QString wifiIface, QString ssid, QString password){
@@ -28,14 +29,13 @@ void QWiFiApp::startWiFiAP(QString inthernetIface, QString wifiIface, QString ss
 }
 
 void QWiFiApp::wifiReadyOutput(QString output){
-
-    if(AP_ENABLED.indexIn(output)!=-1){
+    if(_apEnabled.indexIn(output)!=-1){
         setActiveIterface(output.split(":")[0]);
         emit wifiAPStarted();
-    }else if(CLIENT_IN_REG_EXP.indexIn(output)!=-1){
+    }else if(_clientIn.indexIn(output)!=-1){
         qDebug() << output << "client IN";
          emit  newMessage(output);
-    }else if(CLIENT_OUT_REG_EXP.indexIn(output)!=-1){
+    }else if(_clientOut.indexIn(output)!=-1){
         qDebug() << output << "client OUT";
          emit  newMessage(output);
     }

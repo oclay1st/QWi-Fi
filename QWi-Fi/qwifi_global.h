@@ -13,10 +13,6 @@
 QWIFI_NAMESPACE_START
 
 
-#define AP_ENABLED QRegExp("\\bAP-ENABLED\\b")
-#define CLIENT_IN_REG_EXP QRegExp("\\bAP-STA-CONNECTED\\b")
-#define CLIENT_OUT_REG_EXP QRegExp("\\bAP-STA-DISCONNECTED\\b")
-
 class Utils : public QObject {
 public:
     static void initBD();
