@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
+#include <QObject>
 #include <QQmlContext>
 
 #include "qwifiapp.h"
@@ -19,7 +20,7 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
-    QWiFi::Utils::initBD();
+//    QWiFi::Utils::initBD();
 
     qmlRegisterType<QWiFiApp>("QWiFi", 1, 0, "QWiFiApp");
     qmlRegisterType<NetworkUtility>("QWiFi", 1, 0, "NetworkUtility");
@@ -28,6 +29,7 @@ int main(int argc, char *argv[])
 
     Translation trans;
     engine.rootContext()->setContextProperty("trans", &trans);
+    QObject::connect(&trans,SIGNAL(languageChanged()),&engine,SLOT(retranslate()));
 
     engine.load(QUrl(QLatin1String("qrc:/qml/QWiFi.qml")));
     if (engine.rootObjects().isEmpty())

@@ -66,7 +66,7 @@
     <name>QWiFi</name>
     <message>
         <location filename="../../qml/QWiFi.qml" line="26"/>
-        <location filename="../../qml/QWiFi.qml" line="178"/>
+        <location filename="../../qml/QWiFi.qml" line="176"/>
         <source>QWi-Fi</source>
         <translation></translation>
     </message>
@@ -96,7 +96,7 @@
         <translation>Salir</translation>
     </message>
     <message>
-        <location filename="../../qml/QWiFi.qml" line="178"/>
+        <location filename="../../qml/QWiFi.qml" line="176"/>
         <source>The program will keep running in the system tray. To terminate the program, choose Quit in the context menu </source>
         <translation>El programa continuará ejecutándose. Para terminar la aplicación ejecuta Salir en el menú contextual</translation>
     </message>

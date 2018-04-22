@@ -1,7 +1,8 @@
 #include <QApplication>
 #include <QDir>
 #include <QDebug>
-
+#include <QQmlEngine>
+#include <QQmlContext>
 #include "translation.h"
 
 Translation::Translation(QObject *parent) : QObject(parent)
@@ -26,5 +27,5 @@ void Translation::selectLanguage(QString language){
         qDebug() << "Failed to load translation";
     }
     qApp->installTranslator(translator);
-    emit languageChanged();
-}
+
+    emit languageChanged();}
