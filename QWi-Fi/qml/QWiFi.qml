@@ -1,6 +1,5 @@
 import QtQuick 2.6
 import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.3
 import QtQuick.Window 2.0
 import Qt.labs.platform 1.0
 import QWiFi 1.0
@@ -11,7 +10,6 @@ ApplicationWindow {
     property bool running: false
     property int currentViewIndex: 0
     id: qwifiWindow
-    width: 340
     visible: true
     color: "#fff"
     minimumHeight: 450
@@ -21,7 +19,7 @@ ApplicationWindow {
     x: Screen.width / 2 - width / 2
     y: Screen.height / 2 - height / 2
     font.family: "Roboto Thin"
-    font.letterSpacing : 0.5
+    font.letterSpacing : 0.6
     font.weight: Font.Bold
     title: qsTr("QWi-Fi")
 
@@ -37,6 +35,7 @@ ApplicationWindow {
         onWifiAPStarted: {
             running = true
             starting  = false
+            currentViewIndex = 1
             console.log('started')
         }
         onWifiAPStopped: {
@@ -48,6 +47,7 @@ ApplicationWindow {
             starting = false
             messageBox.messageText = msg
         }
+
     }
 
     NetworkUtility {
@@ -67,6 +67,7 @@ ApplicationWindow {
                 currentViewIndex = 1
                 messageBox.messageText = ""
             }
+            console.info("starting:"+starting)
         }
     }
 
@@ -92,6 +93,7 @@ ApplicationWindow {
         currentIndex: currentViewIndex
 
         ManageView {
+            id:manageView
             startButton.onClicked: {
                 starting = true
                 qwifiapp.startWiFiAP(inIface.currentText, outIface.currentText, ssid.text, password.text)
@@ -101,7 +103,15 @@ ApplicationWindow {
             outIface.model: networkUtlity.getWirelessInterfaces()
         }
 
-        WifiDetailsView {}
+        WifiDetailsView {
+            id:detailView
+            _running: running
+            _ssid: manageView.ssid.text
+            _password: manageView.password.text
+            _interface: manageView.outIface.currentText
+            stopButton.onClicked: qwifiapp.stopWiFiAP()
+        }
+
         PreferenceView {}
 
     }

@@ -7,5 +7,7 @@
         <file>resources/images/go-down.svg</file>
         <file>resources/fonts/Roboto-Thin.ttf</file>
         <file>resources/translations/qwifi_es.qm</file>
+        <file>resources/images/network_running.png</file>
+        <file>resources/images/network_status.png</file>
     </qresource>
 </RCC>
