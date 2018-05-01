@@ -8,16 +8,18 @@ class Worker : public QObject {
     Q_OBJECT
 
 public:
-    explicit Worker(QString command, QStringList arguments, QObject *parent = 0);
+    explicit Worker(QString command, QStringList arguments, bool readAtFinished = false, QObject *parent = 0);
 
 public slots:
     void process();
     void processOutput();
+    void processAllOutput();
     void error();
 
 signals:
     void processfinished();    
     void readyOutput(QString output);
+    void readyAllOutput(QString output);
     void readyErrorOutput(QString output);
 
 private:
