@@ -1,6 +1,5 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
-#include <QObject>
 #include <QQmlContext>
 
 #include "qwifiapp.h"
@@ -20,7 +19,7 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
-//    QWiFi::Utils::initBD();
+    QWiFi::Utils::initBD();
 
     qmlRegisterType<QWiFiApp>("QWiFi", 1, 0, "QWiFiApp");
     qmlRegisterType<NetworkUtility>("QWiFi", 1, 0, "NetworkUtility");
@@ -36,4 +35,5 @@ int main(int argc, char *argv[])
         return -1;
 
     return app.exec();
+
 }

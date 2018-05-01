@@ -8,10 +8,14 @@ SOURCES += main.cpp \
     worker.cpp \
     singleapplication.cpp \
     translation.cpp \
-    networkutility.cpp
+    networkutility.cpp \
+    device.cpp \
+    devicemodel.cpp
 
 RESOURCES += qml.qrc \
     res.qrc
+
+
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -41,7 +45,9 @@ HEADERS += \
     worker.h \
     singleapplication.h \
     translation.h \
-    networkutility.h
+    networkutility.h \
+    device.h \
+    devicemodel.h
 
 
 TRANSLATIONS += resources/translations/qwifi_es.ts
