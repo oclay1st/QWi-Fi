@@ -5,6 +5,7 @@ import QtQuick.Controls.Styles 1.4
 TextField {
     id:control
     color: "#333"
+    font.family: "Roboto"
     background: Rectangle {
         color: "#fff"
         opacity: 0.3
