@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/QWiFi.qml</file>
-        <file>qml/components/DeviceViewItem.qml</file>
+        <file>qml/components/DeviceItemView.qml</file>
         <file>qml/components/ManageView.qml</file>
         <file>qml/components/Message.qml</file>
         <file>qml/components/WifiDetailsView.qml</file>
@@ -11,7 +11,7 @@
         <file>qml/style/CheckBoxStyled.qml</file>
         <file>qml/style/RadioButtonStyled.qml</file>
         <file>qml/qtquickcontrols2.conf</file>
-        <file>qml/components/qmldir</file>
-        <file>qml/style/qmldir</file>
+        <file>qml/style/TextStyled.qml</file>
+        <file>qml/components/DeviceListView.qml</file>
     </qresource>
 </RCC>
