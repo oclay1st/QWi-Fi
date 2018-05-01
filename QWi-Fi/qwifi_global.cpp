@@ -18,35 +18,24 @@ void QWiFi::Utils::initBD()
     }
 }
 
-QString QWiFi::Utils::convert(quint64 bytes)
+QString QWiFi::Utils::sizeFormat(quint64 size)
 {
-    const QStringList sufix{
-        QLatin1String("Bytes"),
-                QLatin1String("KiB"),
-                QLatin1String("MiB"),
-                QLatin1String("GiB"),
-                QLatin1String("TiB")
-    };
+    qreal calc = size;
+    QStringList list;
+    list << "KiB" << "MiB" << "GiB" << "TiB";
 
-    float work = bytes;
-    int cont = 0;
+    QStringListIterator i(list);
+    QString unit("Bytes");
 
-    while (work > 1024 && cont < sufix.size()){
-        work /= 1024;
-        ++cont;
+    while(calc >= 1024.0 && i.hasNext())
+    {
+        unit = i.next();
+        calc /= 1024.0;
     }
 
-    QString ret = QString::number(work);
-
-    int index = ret.lastIndexOf(".");
-
-    if (index != -1 && index < ret.size() - 2){
-        ret = ret.left(index + 3);
-    }
-
-
-    return QString("%1 %2").arg(ret).arg(sufix[cont]);
+    return QString().setNum(calc, 'f', 1) + " " + unit;
 }
+
 
 QSqlQuery *QWiFi::Utils::consultBD(const QString &connection, const QString &querySQL)
 {
