@@ -7,6 +7,7 @@ Item {
     width: 340
     height: 440
 
+
     CheckBoxStyled {
         id: hiddenAP
         x: 24
@@ -77,6 +78,9 @@ Item {
             width: 100
             height: 27
             text:"192.168.12.1"
+            validator: RegExpValidator {
+                regExp:  /^((?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\.){0,3}(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$/
+           }
         }
     }
 }
