@@ -122,33 +122,34 @@ void QWiFiApp::startDevicesMonitor(){
 void QWiFiApp::monitorReadyOutput(QString output){
 
     if(!output.isEmpty()){
-        QStringList macs; int index = 0;
+        QStringList currentMacs; int index = 0;
         while ((index = _deviceInfo.indexIn(output, index)) != -1){
             ++index;
             QString mac = _deviceInfo.cap(1);
-            macs << mac;
+            const quint64 bytesWrited = _deviceInfo.cap(4).toULongLong();
+            const quint64 bytesReaded = _deviceInfo.cap(6).toULongLong();
+            const int connTime = _deviceInfo.cap(8).toInt();
+            currentMacs << mac;
+
             QModelIndex modelIndex = _deviceModel->lookup(mac);
             if (!modelIndex.isValid()){
-                Device *dev = new Device;
-                dev->setMac(mac);
-                dev->setManufacturer(QWiFi::Utils::macDescription(mac.section(":", 0, 2)));
-                dev->setBytesReaded(_deviceInfo.cap(6).toULongLong());
-                dev->setBytesWrited(_deviceInfo.cap(4).toULongLong());
-                dev->setConnCount(1);
-                dev->setConnTime(0);
+                QString manufacturer = QWiFi::Utils::macDescription(mac.section(":", 0, 2));
+                Device *dev = new Device(QString(), QString(), mac, manufacturer, bytesReaded, bytesWrited, connTime);
                 _deviceModel->addDevice(dev);
             }else{
-                _deviceModel->setData(modelIndex, _deviceInfo.cap(6).toULongLong(), DeviceModel::BytesReadedRole);
-                _deviceModel->setData(modelIndex, _deviceInfo.cap(4).toULongLong(), DeviceModel::BytesWritedRole);
-                _deviceModel->setData(modelIndex, _deviceInfo.cap(8).toInt(), DeviceModel::ConnectionTimeRole);
+                _deviceModel->setData(modelIndex, bytesWrited, DeviceModel::BytesWritedRole);
+                _deviceModel->setData(modelIndex, bytesReaded, DeviceModel::BytesReadedRole);
+                _deviceModel->setData(modelIndex, connTime, DeviceModel::ConnectionTimeRole);
             }
         }
-        _deviceModel->removeNoMatchingDevice(macs);
+        _deviceModel->removeNoMatchingDevice(currentMacs);
         this->_setNameAndIpAdress();
+
         emit deviceModelChanged();
 
     }else if(_deviceModel->rowCount()!=0){
         _deviceModel->removeAllDevices();
+
         emit deviceModelChanged();
     }
 }
