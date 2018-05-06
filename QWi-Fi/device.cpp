@@ -2,12 +2,18 @@
 
 #include "device.h"
 
-Device::Device(QObject *parent) :
-    QObject(parent)
-  , _bytesReaded (0)
-  , _bytesWrited (0)
-  , _downloadRate (0)
-  , _uploadRate (0)
+Device::Device(QString name, QString ip, QString mac, QString manufacturer,
+               quint64 bytesReaded, quint64 bytesWrited, int connTime, QObject *parent) :
+    _name(name)
+  , _ip(ip)
+  , _mac(mac)
+  , _manufacturer(manufacturer)
+  , _bytesReaded (bytesReaded)
+  , _bytesWrited (bytesWrited)
+  , _downloadRate (bytesReaded)
+  , _uploadRate (bytesWrited)
+  , _connTime(connTime)
+  , QObject(parent)
 {
 
 }
@@ -15,11 +21,6 @@ Device::Device(QObject *parent) :
 QString Device::manufacturer() const noexcept
 {
     return _manufacturer;
-}
-
-int Device::connCount() const noexcept
-{
-    return _connCount;
 }
 
 int Device::connTime() const noexcept
@@ -66,7 +67,7 @@ void Device::setName(const QString &name) noexcept
 {
     if (_name != name){
         _name = name;
-         emit nameChanged(_name);
+        emit nameChanged(_name);
     }
 }
 
@@ -90,7 +91,7 @@ void Device::setBytesReaded(const quint64 bytesReaded) noexcept
 {
     if (_bytesReaded != bytesReaded){
         _bytesReaded = bytesReaded;
-         emit bytesReadedChanged(_bytesReaded);
+        emit bytesReadedChanged(_bytesReaded);
     }
 }
 
@@ -126,13 +127,6 @@ void Device::setManufacturer(const QString &manufacturer) noexcept
     }
 }
 
-void Device::setConnCount(const int connCount) noexcept
-{
-    if (_connCount != connCount) {
-        _connCount = connCount;
-        emit connCountChanged(_connCount);
-    }
-}
 
 void Device::setConnTime(const int connTime) noexcept
 {

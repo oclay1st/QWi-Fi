@@ -19,10 +19,10 @@ class Device : public QObject
     Q_PROPERTY(quint64 bytesWrited READ bytesWrited WRITE setBytesWrited NOTIFY bytesWritedChanged)
     Q_PROPERTY(float downloadRate READ downloadRate WRITE setDownloadRate NOTIFY downloadRateChanged)
     Q_PROPERTY(float uploadRate READ uploadRate WRITE setUploadRate NOTIFY uploadRateChanged)
-    Q_PROPERTY(int connCount READ connCount WRITE setConnCount NOTIFY connCountChanged)
     Q_PROPERTY(int connTime READ connTime WRITE setConnTime NOTIFY connTimeChanged)
 public:
-    explicit Device(QObject *parent = 0);
+    explicit Device(QString name, QString ip, QString mac, QString manufacturer,
+                    quint64 bytesReaded=0, quint64 bytesWrited=0, int connTime=0, QObject *parent = 0);
 
     QString name() const noexcept;
     QString mac() const noexcept;
@@ -32,7 +32,6 @@ public:
     quint64 bytesWrited() const noexcept;
     float downloadRate() const noexcept;
     float uploadRate() const noexcept;
-    int connCount () const noexcept;
     int connTime () const noexcept;
 
     void setName (const QString &name) noexcept;
@@ -43,7 +42,6 @@ public:
     void setDownloadRate (const quint64 downloadRate) noexcept;
     void setUploadRate (const quint64 uploadRate) noexcept;
     void setManufacturer (const QString &manufacturer) noexcept;
-    void setConnCount (const int connCount) noexcept;
     void setConnTime (const int connTime) noexcept;
 
 
@@ -56,19 +54,17 @@ signals:
     void downloadRateChanged(const quint64 downloadRate);
     void uploadRateChanged(const quint64 uploadRate);
     void manufacturerChanged(const QString &manufacturer);
-    void connCountChanged (const int connCount);
     void connTimeChanged (const int connTime);
 
 private:
     QString _name;
-    QString _mac;
     QString _ip;
+    QString _mac;
+    QString _manufacturer;
     quint64 _bytesReaded;
     quint64 _bytesWrited;
     float _downloadRate;
     float _uploadRate;
-    QString _manufacturer;
-    int _connCount;
     int _connTime;
 };
 
