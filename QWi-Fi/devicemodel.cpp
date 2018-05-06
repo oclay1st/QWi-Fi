@@ -21,7 +21,6 @@ QHash<int, QByteArray> DeviceModel::roleNames() const noexcept
     roles[DownloadRateRole] = "downloadRate";
     roles[UploadRateRole] = "uploadRate";
     roles[ManufacturerRole] = "manufacturer";
-    roles[ConnectionCountRole] = "connCount";
     roles[ConnectionTimeRole] = "connTime";
 
     return roles;
@@ -68,10 +67,6 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const noexcept
 
     case ManufacturerRole:
         return dev->manufacturer();
-        break;
-
-    case ConnectionCountRole:
-        return dev->connCount();
         break;
 
     case ConnectionTimeRole:
@@ -121,10 +116,6 @@ bool DeviceModel::setData(const QModelIndex &index, const QVariant &value, int r
 
     case ManufacturerRole:
         dev->setManufacturer(value.toString());
-        break;
-
-    case ConnectionCountRole:
-        dev->setConnCount(value.toInt());
         break;
 
     case ConnectionTimeRole:

@@ -20,7 +20,6 @@ public:
         DownloadRateRole,
         UploadRateRole,
         ManufacturerRole,
-        ConnectionCountRole,
         ConnectionTimeRole
     };
 
