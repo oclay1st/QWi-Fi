@@ -12,7 +12,6 @@ ListView {
         _downRateBytes: downloadRate
         _upRateBytes: uploadRate
         _manufacturer: manufacturer
-        _connCount: connCount
         _connTime: connTime
     }
 

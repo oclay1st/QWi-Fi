@@ -12,7 +12,6 @@ Item {
     property string _upRateBytes: "0 Bytes/s"
     property string _manufacturer: qsTr("Unknown MAC identity")
     property int _connTime: 0
-    property int _connCount: 1
 
     Rectangle{
         TextStyled{
