@@ -1,2 +1,2 @@
 # QWi-Fi
-Easy and beatiful tool for wifi acces ponit management on Linux
+Easy and beautiful tool for wifi access point management on Linux
