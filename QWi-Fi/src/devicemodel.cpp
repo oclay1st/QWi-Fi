@@ -24,6 +24,7 @@ QHash<int, QByteArray> DeviceModel::roleNames() const noexcept
     roles[ConnectionTimeRole] = "connTime";
 
     return roles;
+
 }
 
 QVariant DeviceModel::data(const QModelIndex &index, int role) const noexcept

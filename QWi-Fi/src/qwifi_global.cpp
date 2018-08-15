@@ -14,7 +14,7 @@ void QWiFi::Utils::initBD()
     db.setDatabaseName("/home/oclay/macs.db");
 
     if (!db.open()){
-        qDebug() << QObject::tr("Database Error") << db.lastError().text();
+        qDebug() << "Database Error" << db.lastError().text();
     }
 }
 
@@ -27,13 +27,13 @@ QString QWiFi::Utils::sizeFormat(quint64 size)
     QStringListIterator i(list);
     QString unit("Bytes");
 
-    while(calc >= 1024.0 && i.hasNext())
+    while(calc >= 1024 && i.hasNext())
     {
         unit = i.next();
-        calc /= 1024.0;
+        calc /= 1024;
     }
 
-    return QString().setNum(calc, 'f', 1) + " " + unit;
+    return QString().setNum(calc, 'f', 0) + " " + unit;
 }
 
 

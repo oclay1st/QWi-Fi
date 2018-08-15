@@ -5,7 +5,7 @@
 
 #include <QAbstractListModel>
 
-#include <device.h>
+#include <src/device.h>
 
 class DeviceModel : public QAbstractListModel
 {

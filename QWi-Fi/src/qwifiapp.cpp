@@ -10,16 +10,21 @@
 QWiFiApp::QWiFiApp(QObject *parent) : QObject(parent)
 {
     _deviceModel = new DeviceModel(this);
-    _apEnabled.setPattern("\\bAP-ENABLED\\b");
-    _clientIn.setPattern("\\bAP-STA-CONNECTED\\b");
-    _clientOut.setPattern("\\bAP-STA-DISCONNECTED\\b");
-    _wifiConfigDir.setPattern("\\bConfig dir\\b");
-    _deviceInfo.setPattern("(([0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2})\nflags(.|\\s)*rx_bytes=([0-9]+)(.|\\s)*tx_bytes=([0-9]+)(.|\\s)*connected_time=([0-9]+)");
+    _deviceInfoRegExp.setPattern("(([0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2})\nflags(.|\\s)*rx_bytes=([0-9]+)(.|\\s)*tx_bytes=([0-9]+)(.|\\s)*connected_time=([0-9]+)");
     _devicesMonitorTimer.setInterval(2000);
 }
 
 QAbstractItemModel* QWiFiApp::getDeviceModel(){
     return _deviceModel;
+}
+
+int QWiFiApp::getDevicesCount(){
+    return _devicesCount;
+}
+
+void QWiFiApp::setDevicesCount(int count){
+    _devicesCount = count;
+    emit devicesCountChanged();
 }
 
 void QWiFiApp::setActiveIterface(QString iface){
@@ -30,9 +35,18 @@ void QWiFiApp::setCurrentWiFiConfigPath(QString path){
     _currentWiFiConfigPath = path;
 }
 
-void QWiFiApp::startWiFiAP(QString inthernetIface, QString wifiIface, QString ssid, QString password){
+void QWiFiApp::startWiFiAP(QString channel, QString gateway, bool isolation, bool hidden,
+                           QString inthernetIface, QString wifiIface, QString ssid, QString password){
     QStringList arguments;
-    arguments << "create_ap" << "--no-virt" << wifiIface << inthernetIface << ssid << password;
+    arguments << "create_ap" << "-c" << channel << "-g" << gateway << "--no-virt";
+    if(isolation){
+        arguments << "--isolate-clients" ;
+    }
+    if(hidden){
+        arguments << "--hidden" ;
+    }
+    arguments << wifiIface << inthernetIface << ssid << password;
+
     QThread *thread = new QThread(this);
     Worker *worker = new Worker("pkexec", arguments);
     worker->moveToThread(thread);
@@ -48,32 +62,60 @@ void QWiFiApp::startWiFiAP(QString inthernetIface, QString wifiIface, QString ss
 }
 
 void QWiFiApp::wifiReadyOutput(QString output){
-    if(_apEnabled.indexIn(output)!=-1){
+
+    if(output.contains("AP-ENABLED")){
 
         setActiveIterface(output.split(":")[0]);
         qDebug() << output << "started";
         emit wifiAPStarted();
 
-    }else if(_wifiConfigDir.indexIn(output)!=-1){
+    }else if(output.contains("Config dir")){
 
         QString path = output.split(":")[1].simplified();
         setCurrentWiFiConfigPath(path);
 
-    }else if(_clientIn.indexIn(output)!=-1){
+    }else if(output.contains("AP-STA-CONNECTED")){
 
+        QString mac = output.split(" ").last().simplified();
+        QString message = tr("New device %1 connected").arg(mac);
+        emit  newMessage(message);
+        setDevicesCount(_devicesCount+1);
         qDebug() << output << "client IN";
-        emit  newMessage(output);
 
-    }else if(_clientOut.indexIn(output)!=-1){
+    }else if(output.contains("AP-STA-DISCONNECTED")){
 
+        QString mac = output.split(" ").last().simplified();
+        QString message = tr("Device %1 disconnected").arg(mac);
+        emit  newMessage(message);
+        setDevicesCount(_devicesCount-1);
         qDebug() << output << "client OUT";
-        emit  newMessage(output);
 
     }
 }
 void QWiFiApp::wifiReadyErrorOutput(QString errorOutput){
     qDebug() << errorOutput;
-    emit  newMessage(errorOutput);
+    MessageType messageType = Info;
+    QString message="";
+
+    if(errorOutput.contains("not possible due to RF-kill") ||  errorOutput.contains("rfkill unblock")){
+        message = tr("Your adapter seems disabled, please enable it");
+        messageType = Error;
+    }else if(errorOutput.startsWith("ERROR: ")){
+        if(errorOutput.contains("not support AP")){
+            message = tr("Your adapter does not support AP (master) mode");
+        }else if(errorOutput.contains("and an AP at the same time")){
+            message = tr("Your adapter can not be a station and an AP at the same time");
+        }else{
+            message = errorOutput.remove(0,7);
+        }
+        messageType = Error;
+    }else if(errorOutput.startsWith("WARN: ")){
+        message = errorOutput.remove(0,6);
+        messageType = Warning;
+    }
+
+    emit wifiAPStopped();
+    emit newMessage(message.simplified(),messageType);
 }
 
 void QWiFiApp::stopWiFiAP(){
@@ -90,6 +132,7 @@ void QWiFiApp::stopWiFiAP(){
         }
     });
     process->start("pkexec", arguments);
+    setDevicesCount(0);
 }
 
 
@@ -108,6 +151,8 @@ void QWiFiApp::startDevicesMonitor(){
     connect(thread, SIGNAL(started()), &_devicesMonitorTimer, SLOT(start()));
     connect(this,SIGNAL(wifiAPStopped()),this,SLOT(stopDevicesMonitor()));
     connect(&_devicesMonitorTimer, SIGNAL(timeout()), worker,SLOT(process()));
+    // Starting the monitor just after the timer starts... emiting a timeout signal
+    connect(thread, SIGNAL(started()), &_devicesMonitorTimer, SIGNAL(timeout()));
     connect(worker, SIGNAL(readyAllOutput(QString)),this,SLOT(monitorReadyOutput(QString)));
     connect(worker, SIGNAL(readyErrorOutput(QString)),this,SLOT(monitorReadyErrorOutput(QString)));
     connect(this, SIGNAL(devicesMonitorStopped()), thread, SLOT(quit()));
@@ -123,12 +168,12 @@ void QWiFiApp::monitorReadyOutput(QString output){
 
     if(!output.isEmpty()){
         QStringList currentMacs; int index = 0;
-        while ((index = _deviceInfo.indexIn(output, index)) != -1){
+        while ((index = _deviceInfoRegExp.indexIn(output, index)) != -1){
             ++index;
-            QString mac = _deviceInfo.cap(1);
-            const quint64 bytesWrited = _deviceInfo.cap(4).toULongLong();
-            const quint64 bytesReaded = _deviceInfo.cap(6).toULongLong();
-            const int connTime = _deviceInfo.cap(8).toInt();
+            QString mac = _deviceInfoRegExp.cap(1);
+            const quint64 bytesWrited = _deviceInfoRegExp.cap(4).toULongLong();
+            const quint64 bytesReaded = _deviceInfoRegExp.cap(6).toULongLong();
+            const int connTime = _deviceInfoRegExp.cap(8).toInt();
             currentMacs << mac;
 
             QModelIndex modelIndex = _deviceModel->lookup(mac);
